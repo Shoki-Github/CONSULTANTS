@@ -58,3 +58,25 @@ a {
   background: #fff;
   box-shadow: 0 8px 26px rgb(18 53 95 / 5%);
 }
+
+/* Printing (used by the capability statement): show page content only. */
+@media print {
+  header,
+  footer,
+  .no-print,
+  a[aria-label*="WhatsApp"] {
+    display: none !important;
+  }
+
+  main {
+    padding-top: 0 !important;
+  }
+
+  body {
+    background: #fff;
+  }
+
+  @page {
+    margin: 14mm;
+  }
+}

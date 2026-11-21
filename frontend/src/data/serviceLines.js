@@ -13,6 +13,7 @@ export const serviceLines = [
       'Alignment of plans and indicators to Dira 2050 and the Five-Year Development Plan',
       'Learning partnerships: a critical friend alongside your programme',
     ],
+    showMethodsAndSectors: true,
     deliverableGroups: [
       {
         title: 'MEL systems',
@@ -21,6 +22,8 @@ export const serviceLines = [
           'Theory of change and results frameworks',
           'Indicator design and indicator reference sheets',
           'M&E readiness and organisational capacity assessments',
+          'MEL system reviews and audits',
+          'Data quality assessments (DQA)',
           'Gender-responsive MEL design',
           'Alignment of plans and indicators to Dira 2050 and the Five-Year Development Plan',
         ],
@@ -30,8 +33,10 @@ export const serviceLines = [
         description: 'Independent, utilisation-focused evaluations that are useful to managers, funders and participants.',
         items: [
           'Baseline, mid-term and final evaluations',
-          'OECD-DAC criteria; theory-based and counterfactual designs where appropriate',
+          'Baseline, midline and endline household and institutional surveys',
+          'Digital field data collection with KoboToolbox and ODK',
           'Strategic and programme reviews',
+          'Value for money assessments',
           'Participatory and ethical evaluation approaches',
         ],
       },

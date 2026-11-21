@@ -1,6 +1,7 @@
 <script setup>
 import { computed } from 'vue'
 import { RouterLink } from 'vue-router'
+import MethodsAndSectors from '../components/MethodsAndSectors.vue'
 import PageBanner from '../components/PageBanner.vue'
 import ServiceFaq from '../components/ServiceFaq.vue'
 import { publishedCaseStudies } from '../data/caseStudies'
@@ -55,7 +56,9 @@ const relatedCaseStudy = computed(() => publishedCaseStudies.find((item) => item
       </div>
     </section>
 
-    <section class="bg-white px-5 py-14 md:py-16 lg:px-8">
+    <MethodsAndSectors v-if="service.showMethodsAndSectors" />
+
+    <section class="px-5 py-14 md:py-16 lg:px-8" :class="service.showMethodsAndSectors ? 'bg-paper' : 'bg-white'">
       <div class="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.8fr_1.2fr]">
         <div>
           <h2 class="text-3xl font-bold tracking-tight text-navy md:text-4xl">How an engagement typically runs</h2>

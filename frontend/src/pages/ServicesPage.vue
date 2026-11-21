@@ -2,9 +2,10 @@
 import { onMounted } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useRoute } from 'vue-router'
+import MethodsAndSectors from '../components/MethodsAndSectors.vue'
 import PageBanner from '../components/PageBanner.vue'
 import ServiceFaq from '../components/ServiceFaq.vue'
-import { serviceFaqs } from '../data/siteContent'
+import { serviceFaqs, specialistOffers } from '../data/siteContent'
 import { serviceLines } from '../data/serviceLines'
 
 const route = useRoute()
@@ -35,6 +36,22 @@ onMounted(() => {
         </div>
       </div>
     </section>
+
+    <section class="bg-paper px-5 py-14 md:py-16 lg:px-8">
+      <div class="mx-auto max-w-7xl">
+        <h2 class="max-w-3xl text-3xl font-bold tracking-tight text-navy md:text-4xl">Specialist offers</h2>
+        <p class="mt-4 max-w-3xl text-base leading-7 text-muted">Focused assignments you can commission on their own or as part of a wider engagement.</p>
+        <div class="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+          <RouterLink v-for="offer in specialistOffers" :key="offer.title" class="flex flex-col rounded-xl border border-[#e5dfcd] bg-white p-5 transition hover:border-brand" :to="offer.href">
+            <h3 class="text-lg font-bold leading-snug text-navy">{{ offer.title }}</h3>
+            <p class="mt-3 flex-1 text-base leading-7 text-muted">{{ offer.description }}</p>
+            <span class="mt-4 text-sm font-bold text-brand">Learn more <span aria-hidden="true">→</span></span>
+          </RouterLink>
+        </div>
+      </div>
+    </section>
+
+    <MethodsAndSectors />
 
     <section class="bg-paper px-5 py-14 md:py-16 lg:px-8">
       <div class="mx-auto max-w-4xl">

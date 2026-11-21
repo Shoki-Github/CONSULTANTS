@@ -7,6 +7,9 @@ export const brand = {
   directorEmail: 'pshoki@clmconsultants.co.tz',
   phoneNumbers: ['+255 765 785 383', '+255 685 993 590'],
   website: 'https://clm-consultants.vercel.app',
+  // Shown on the capability statement once filled in (e.g. BRELA number, TIN).
+  registrationNumber: '',
+  tin: '',
 }
 
 export const homeContent = {
@@ -41,8 +44,8 @@ export const homeContent = {
       href: '/services/mel-systems-evaluation',
     },
     {
-      title: 'AI and MEL Solutions',
-      summary: 'Apply AI to support evidence reviews, reporting, learning and decision-making.',
+      title: 'AI & Digital Services',
+      summary: 'AI readiness and strategy, generative AI adoption, AI assistants and automation in your systems, and AI for MEL.',
       href: '/ai-opportunities',
     },
     {
@@ -113,6 +116,66 @@ export const aboutContent = {
   team: 'CLM draws on a network of specialists in statistics, data engineering, gender, ESG and sector expertise, assembled for each assignment.',
 }
 
+export const sectors = [
+  {
+    title: 'Health',
+    description: 'M&E for health programmes and facilities, including indicators, routine data and programme evaluations.',
+  },
+  {
+    title: 'Agriculture & livelihoods',
+    description: 'Household surveys and evaluations of smallholder, market and livelihoods programmes.',
+  },
+  {
+    title: 'Education & skills',
+    description: 'Results frameworks, learning reviews and evaluations for education, youth and skills programmes.',
+  },
+  {
+    title: 'Governance & public sector',
+    description: 'MEL systems for ministries, departments and agencies, aligned to Dira 2050 and the Five-Year Development Plan.',
+  },
+]
+
+export const evaluationMethods = [
+  { title: 'OECD-DAC criteria', description: 'Relevance, coherence, effectiveness, efficiency, impact and sustainability.' },
+  { title: 'Theory-based evaluation', description: 'Testing the causal pathway and assumptions in the theory of change.' },
+  { title: 'Counterfactual designs', description: 'Comparison-group and quasi-experimental designs where they fit the question and budget.' },
+  { title: 'Contribution analysis', description: 'Building a credible case for how the programme contributed to observed change.' },
+  { title: 'Outcome harvesting', description: 'Collecting evidence of outcomes, then working back to how the programme contributed.' },
+  { title: 'Most Significant Change', description: 'Participatory collection and selection of stories of change.' },
+  { title: 'Value for money', description: 'Assessing economy, efficiency, effectiveness and equity (the 4Es).' },
+  { title: 'Mixed-methods data collection', description: 'Surveys, key informant interviews, focus groups and document review.' },
+]
+
+export const specialistOffers = [
+  {
+    title: 'MEL system review & data quality assessment',
+    description: 'An independent check of your indicators, data flows, tools and reporting, with a practical improvement plan.',
+    href: '/services/mel-systems-evaluation',
+  },
+  {
+    title: 'Baseline, midline & endline surveys',
+    description: 'Household and institutional surveys with digital field data collection (KoboToolbox, ODK) and quality checks.',
+    href: '/services/mel-systems-evaluation',
+  },
+  {
+    title: 'Learning partnerships',
+    description: 'A critical friend alongside your programme, running learning agendas and reflection sessions.',
+    href: '/services/mel-systems-evaluation',
+  },
+  {
+    title: 'Value for money assessments',
+    description: 'Evidence on economy, efficiency, effectiveness and equity for funders and boards.',
+    href: '/services/mel-systems-evaluation',
+  },
+]
+
+export const workshopFormats = [
+  { title: 'Half-day briefing', description: 'For leaders and boards: what good MEL looks like and how to use evidence in decisions.' },
+  { title: 'One-day workshop', description: 'A hands-on day on one skill, such as indicators, theory of change or data quality.' },
+  { title: 'Week-long course', description: 'A full course with practical exercises using your own programme and data.' },
+  { title: 'Mentoring follow-up', description: 'On-the-job support after training so new skills are applied at work.' },
+]
+
 export const serviceFaqs = [
   {
     question: 'How do you price assignments?',
@@ -132,6 +195,6 @@ export const serviceFaqs = [
   },
   {
     question: 'Do you work with procurement processes (tenders, EOIs)?',
-    answer: 'Yes. We regularly respond to RFPs and expressions of interest and can provide a capability statement on request.',
+    answer: 'Yes. We regularly respond to RFPs and expressions of interest. Our capability statement is available on the Capability Statement page and can be saved as a PDF.',
   },
 ]

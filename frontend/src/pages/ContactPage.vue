@@ -7,6 +7,7 @@ import { serviceFaqs, brand } from '../data/siteContent'
 import { serviceLines } from '../data/serviceLines'
 import { apiRequest } from '../services/api'
 
+const AI_SERVICE = 'AI & Digital Services'
 const organisationTypes = ['Government', 'Development partner', 'NGO', 'Private sector', 'Individual']
 const errors = ref({})
 const failure = ref(false)
@@ -27,11 +28,13 @@ const form = reactive({
 // Pre-fill from links such as /contact?service=...&course=... (Learn page).
 const route = useRoute()
 const requestedService = typeof route.query.service === 'string' ? route.query.service : ''
-if (serviceLines.some((service) => service.title === requestedService)) {
+if (serviceLines.some((service) => service.title === requestedService) || requestedService === AI_SERVICE) {
   form.service_of_interest = requestedService
 }
 if (typeof route.query.course === 'string' && route.query.course.length <= 200) {
   form.message = `I would like to know more about the course "${route.query.course}".`
+} else if (typeof route.query.topic === 'string' && route.query.topic.length <= 200) {
+  form.message = `I would like to discuss: ${route.query.topic}.`
 }
 
 async function submit() {
@@ -133,6 +136,7 @@ async function submit() {
               <select v-model="form.service_of_interest" class="field-input" required>
                 <option disabled value="">Select a service</option>
                 <option v-for="service in serviceLines" :key="service.slug" :value="service.title">{{ service.title }}</option>
+                <option :value="AI_SERVICE">{{ AI_SERVICE }}</option>
                 <option value="Other">Other</option>
               </select>
               <span v-if="errors.service_of_interest" class="field-error">{{ errors.service_of_interest[0] }}</span>

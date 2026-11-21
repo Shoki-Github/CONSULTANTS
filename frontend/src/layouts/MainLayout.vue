@@ -29,7 +29,7 @@ async function logout() {
 </script>
 
 <template>
-  <div class="min-h-screen pt-20 sm:pt-[5.5rem] xl:pt-0">
+  <div class="min-h-screen pt-20 sm:pt-[5.5rem] xl:pt-0 print:pt-0">
     <header class="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-navy text-white shadow-sm xl:sticky xl:inset-x-auto">
       <div class="mx-auto flex max-w-7xl items-center justify-between gap-2 px-4 py-3 sm:px-5 lg:px-8">
         <BrandLogo />
@@ -38,8 +38,9 @@ async function logout() {
           <RouterLink class="nav-link" to="/">Home</RouterLink>
           <RouterLink class="nav-link" to="/about">About</RouterLink>
           <RouterLink class="nav-link" to="/services">Services</RouterLink>
-          <RouterLink class="nav-link" to="/ai-opportunities">AI &amp; MEL</RouterLink>
+          <RouterLink class="nav-link" to="/ai-opportunities">AI Services</RouterLink>
           <RouterLink v-if="publishedCaseStudies.length >= 2" class="nav-link" to="/case-studies">Case Studies</RouterLink>
+          <RouterLink class="nav-link" to="/digital-products">Digital Products</RouterLink>
           <RouterLink class="nav-link" to="/learn">Training</RouterLink>
           <RouterLink class="nav-link" to="/insights">Insights</RouterLink>
           <RouterLink class="nav-link" to="/toolkit">Toolkit</RouterLink>
@@ -78,8 +79,9 @@ async function logout() {
           <RouterLink class="mobile-menu-link" to="/">Home</RouterLink>
           <RouterLink class="mobile-menu-link" to="/about">About</RouterLink>
           <RouterLink class="mobile-menu-link" to="/services">Services</RouterLink>
-          <RouterLink class="mobile-menu-link" to="/ai-opportunities">AI &amp; MEL</RouterLink>
+          <RouterLink class="mobile-menu-link" to="/ai-opportunities">AI Services</RouterLink>
           <RouterLink v-if="publishedCaseStudies.length >= 2" class="mobile-menu-link" to="/case-studies">Case Studies</RouterLink>
+          <RouterLink class="mobile-menu-link" to="/digital-products">Digital Products</RouterLink>
           <RouterLink class="mobile-menu-link" to="/learn">Training</RouterLink>
           <RouterLink class="mobile-menu-link" to="/insights">Insights</RouterLink>
           <RouterLink class="mobile-menu-link" to="/toolkit">MEL Toolkit</RouterLink>
@@ -104,7 +106,7 @@ async function logout() {
         <nav aria-label="Services">
           <h2 class="text-sm font-bold tracking-wide text-white">Services</h2>
           <ul class="mt-4 space-y-3 text-sm text-slate-200">
-            <li><RouterLink class="transition-colors hover:text-white" to="/ai-opportunities">AI &amp; MEL</RouterLink></li>
+            <li><RouterLink class="transition-colors hover:text-white" to="/ai-opportunities">AI Services</RouterLink></li>
             <li v-for="service in serviceLines" :key="service.slug">
               <RouterLink class="transition-colors hover:text-white" :to="{ name: 'service-detail', params: { slug: service.slug } }">{{ service.title }}</RouterLink>
             </li>
@@ -119,6 +121,7 @@ async function logout() {
             <li><RouterLink class="transition-colors hover:text-white" to="/insights">Insights</RouterLink></li>
             <li v-if="publishedLearnProducts.length"><RouterLink class="transition-colors hover:text-white" to="/learn">Training &amp; Courses</RouterLink></li>
             <li><RouterLink class="transition-colors hover:text-white" to="/toolkit">MEL Toolkit</RouterLink></li>
+            <li><RouterLink class="transition-colors hover:text-white" to="/capability">Capability Statement</RouterLink></li>
             <li><RouterLink class="transition-colors hover:text-white" to="/contact">Contact</RouterLink></li>
             <li><RouterLink class="transition-colors hover:text-white" to="/privacy">Privacy</RouterLink></li>
           </ul>

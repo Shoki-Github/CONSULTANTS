@@ -35,6 +35,17 @@ onMounted(async () => {
             <RouterLink class="inline-flex min-h-12 items-center justify-center rounded-md bg-brand px-6 py-3 text-sm font-bold text-white transition hover:bg-brand-dark" to="/services">Explore Our Services</RouterLink>
             <RouterLink class="inline-flex min-h-12 items-center justify-center rounded-md border border-navy px-6 py-3 text-sm font-bold text-navy transition hover:bg-navy hover:text-white" to="/contact">Discuss Your Needs</RouterLink>
           </div>
+          <div class="mt-4 flex flex-wrap gap-3" aria-label="Explore CLM work and learning">
+            <RouterLink class="inline-flex min-h-11 items-center justify-center rounded-md border border-brand px-5 py-2.5 text-sm font-bold text-brand transition hover:bg-brand hover:text-white" to="/case-studies">
+              CLM Projects
+            </RouterLink>
+            <RouterLink class="inline-flex min-h-11 items-center justify-center rounded-md border border-brand px-5 py-2.5 text-sm font-bold text-brand transition hover:bg-brand hover:text-white" to="/digital-products">
+              Digital Products
+            </RouterLink>
+            <RouterLink class="inline-flex min-h-11 items-center justify-center rounded-md border border-brand px-5 py-2.5 text-sm font-bold text-brand transition hover:bg-brand hover:text-white" to="/learn">
+              Online Courses
+            </RouterLink>
+          </div>
         </div>
 
         <div class="relative mx-auto w-full max-w-xl overflow-hidden rounded-2xl border border-[#e5dfcd] bg-navy shadow-[0_18px_48px_rgba(27,42,74,0.12)]">
