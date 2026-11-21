@@ -21,8 +21,8 @@ async function loadConsultations() {
       apiRequest('/admin/consultations?per_page=50'),
       apiRequest('/admin/contact-messages?per_page=50'),
     ])
-    consultations.value = consultationResponse.data.data
-    messages.value = messageResponse.data.data
+    consultations.value = consultationResponse.data.data.data
+    messages.value = messageResponse.data.data.data
     for (const consultation of consultations.value) {
       statuses[consultation.id] = consultation.status
     }
@@ -83,7 +83,6 @@ onMounted(loadConsultations)
       <p class="mt-4 max-w-2xl leading-7 text-muted">Review submitted inquiries and keep their workflow status up to date. Access is enforced by Laravel policies.</p>
       <div class="mt-6 flex flex-wrap gap-4 text-sm font-bold text-brand">
         <RouterLink to="/admin/content">Manage website content →</RouterLink>
-        <RouterLink to="/admin/forum">Review forum activity →</RouterLink>
       </div>
 
       <p v-if="error" class="mt-8 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-800" role="alert">{{ error }}</p>
@@ -144,6 +143,17 @@ onMounted(loadConsultations)
                 <p class="font-mono text-xs font-semibold text-brand">{{ message.reference }}</p>
                 <h3 class="mt-2 text-lg font-semibold text-ink">{{ message.subject }}</h3>
                 <p class="mt-2 text-sm text-muted">{{ message.name }} · <a class="text-brand hover:underline" :href="`mailto:${encodeURIComponent(message.email)}`">{{ message.email }}</a></p>
+                <p v-if="message.organisation" class="mt-1 text-sm text-muted">
+                  {{ message.organisation }}<span v-if="message.organisation_type"> · {{ message.organisation_type }}</span>
+                </p>
+                <p v-if="message.phone" class="mt-1 text-sm text-muted">
+                  <a class="text-brand hover:underline" :href="`tel:${message.phone.replaceAll(' ', '')}`">{{ message.phone }}</a>
+                </p>
+                <p v-if="message.service_of_interest || message.preferred_language" class="mt-2 text-xs text-muted">
+                  <span v-if="message.service_of_interest">Service: {{ message.service_of_interest }}</span>
+                  <span v-if="message.service_of_interest && message.preferred_language"> · </span>
+                  <span v-if="message.preferred_language">Language: {{ message.preferred_language }}</span>
+                </p>
               </div>
               <time class="text-xs text-muted">{{ new Date(message.created_at).toLocaleString() }}</time>
             </div>

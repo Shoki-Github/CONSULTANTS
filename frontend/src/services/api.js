@@ -1,4 +1,5 @@
-const API_BASE = '/api/v1'
+const API_ORIGIN = (import.meta.env.VITE_API_ORIGIN || '').replace(/\/$/, '')
+const API_BASE = `${API_ORIGIN}/api/v1`
 
 export class ApiError extends Error {
   constructor(message, status, errors = {}) {
@@ -17,7 +18,7 @@ function getCookie(name) {
 }
 
 async function ensureCsrfCookie() {
-  const response = await fetch('/sanctum/csrf-cookie', { credentials: 'include' })
+  const response = await fetch(`${API_ORIGIN}/sanctum/csrf-cookie`, { credentials: 'include' })
   if (!response.ok) {
     throw new ApiError('Unable to start a secure session. Please try again.', response.status)
   }

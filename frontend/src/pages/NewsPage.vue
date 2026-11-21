@@ -1,19 +1,23 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import { RouterLink } from 'vue-router'
+import NewsletterSignup from '../components/NewsletterSignup.vue'
 import PageBanner from '../components/PageBanner.vue'
 import { apiRequest } from '../services/api'
 
 const articles = ref([])
-const error = ref('')
 const loading = ref(true)
+const failure = ref(false)
 
 onMounted(async () => {
   try {
     const response = await apiRequest('/news')
-    articles.value = response.data.data
-  } catch (requestError) {
-    error.value = requestError.message
+    const results = response.data?.data
+    if (!Array.isArray(results)) throw new TypeError('Expected a paginated insights response.')
+    articles.value = results
+  } catch (error) {
+    console.error('Unable to load insights.', error)
+    failure.value = true
   } finally {
     loading.value = false
   }
@@ -22,29 +26,28 @@ onMounted(async () => {
 
 <template>
   <div>
-  <PageBanner title="News & Publications" breadcrumb="News & Publications" subtitle="Updates, research and publications from CLM Consultants." />
-  <section class="bg-white">
-    <div class="mx-auto max-w-7xl px-5 py-12 md:py-16 lg:px-8">
-      <p class="text-xs font-bold uppercase tracking-[0.2em] text-brand">Latest updates</p>
-      <h2 class="mt-3 text-3xl font-bold tracking-tight text-ink md:text-4xl">News &amp; Publications</h2>
-      <p class="mt-4 max-w-2xl leading-7 text-muted">Perspectives, news, and learning from our work.</p>
-
-      <p v-if="error" class="mt-10 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-800" role="alert">{{ error }}</p>
-      <p v-else-if="loading" class="mt-10 text-muted" role="status">Loading articles…</p>
-      <div v-else-if="articles.length" class="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        <article v-for="article in articles" :key="article.slug" class="content-card p-6">
-          <time v-if="article.published_at" class="inline-flex rounded bg-brand-soft px-2.5 py-1 text-xs font-bold uppercase tracking-wider text-brand">{{ new Date(article.published_at).toLocaleDateString() }}</time>
-          <h3 class="mt-4 text-lg font-bold leading-snug text-ink">
-            <RouterLink class="hover:text-brand" :to="{ name: 'news-detail', params: { slug: article.slug } }">{{ article.title }}</RouterLink>
-          </h3>
-          <p class="mt-3 text-sm leading-6 text-muted">{{ article.excerpt }}</p>
-          <RouterLink class="mt-5 inline-flex text-xs font-bold text-brand" :to="{ name: 'news-detail', params: { slug: article.slug } }">Read more <span class="ml-2" aria-hidden="true">→</span></RouterLink>
-        </article>
+    <PageBanner title="Insights" breadcrumb="Insights" subtitle="Practical thinking on evidence, MEL and Tanzania’s development." large />
+    <section class="bg-white px-5 py-14 md:py-16 lg:px-8">
+      <div class="mx-auto max-w-7xl">
+        <p v-if="loading" class="text-base text-muted" role="status">Loading insights…</p>
+        <p v-else-if="failure" class="text-base text-muted" role="alert">We couldn’t load insights right now. Please try again later.</p>
+        <div v-else-if="articles.length" class="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          <article v-for="article in articles" :key="article.slug" class="rounded-xl border border-[#e5dfcd] bg-white p-6">
+            <p class="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm font-medium text-muted">
+              <span class="rounded-full bg-[#e6f3f1] px-3 py-1 font-semibold text-navy">{{ article.category }}</span>
+              <time v-if="article.published_at" :datetime="article.published_at">{{ new Date(article.published_at).toLocaleDateString('en-GB') }}</time>
+            </p>
+            <h2 class="mt-4 text-xl font-bold leading-snug text-navy">
+              <RouterLink class="hover:text-brand" :to="{ name: 'insight-detail', params: { slug: article.slug } }">{{ article.title }}</RouterLink>
+            </h2>
+            <p v-if="article.excerpt" class="mt-3 text-base leading-7 text-muted">{{ article.excerpt }}</p>
+            <p class="mt-5 text-sm text-muted">{{ article.author }} · {{ article.reading_time }} min read</p>
+            <RouterLink class="mt-4 inline-flex text-sm font-bold text-brand hover:text-brand-dark" :to="{ name: 'insight-detail', params: { slug: article.slug } }">Read insight <span class="ml-2" aria-hidden="true">→</span></RouterLink>
+          </article>
+        </div>
+        <p v-else class="max-w-3xl text-base leading-7 text-muted">No insights have been published yet. Please check back soon.</p>
       </div>
-      <p v-else class="mt-10 rounded-2xl border border-dashed border-line bg-paper p-8 leading-7 text-muted">
-        New insights will be published here. Check back soon.
-      </p>
-    </div>
-  </section>
+    </section>
+    <NewsletterSignup source="insights" />
   </div>
 </template>

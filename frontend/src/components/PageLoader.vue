@@ -1,5 +1,5 @@
 <template>
-  <div class="page-loader" role="status" aria-label="Loading CLM Consultants">
+  <div class="page-loader" role="status" aria-label="Loading CLM Consultants Limited">
     <span class="jimu-primary-loading" aria-hidden="true"></span>
   </div>
 </template>

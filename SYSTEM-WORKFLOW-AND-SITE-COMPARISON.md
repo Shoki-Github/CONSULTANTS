@@ -1,4 +1,4 @@
-# CLM Consultants website: how it works
+# CLM Consultants Limited website: how it works
 
 ## Summary
 

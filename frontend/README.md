@@ -1,6 +1,6 @@
-# CLM Consultants website
+# CLM Consultants Limited website
 
-Vue 3 SPA built with Vite, Vue Router, Pinia, and Tailwind CSS v4. Public content, inquiries, forum discussions, and staff content/moderation screens use Laravel's `/api/v1` API. Authentication uses Sanctum's first-party session cookies; no long-lived credentials are stored in browser local storage.
+Vue 3 single-page website built with Vite, Vue Router, Pinia and Tailwind CSS v4. Public content and contact inquiries use the Laravel `/api/v1` API. Staff authentication uses Sanctum session cookies.
 
 ## Development
 
@@ -17,25 +17,20 @@ npm install
 npm run dev
 ```
 
-Vite proxies `/api` and `/sanctum` to `http://127.0.0.1:8000`. Configure Laravel's `FRONTEND_URL` and `SANCTUM_STATEFUL_DOMAINS` for the frontend origin. Seed the backend with `php artisan migrate --seed`.
+Vite proxies `/api` and `/sanctum` to `http://127.0.0.1:8000`. Configure Laravel's `FRONTEND_URL`, `SANCTUM_STATEFUL_DOMAINS`, session domain and CORS settings for the frontend origin. Run `php artisan migrate --seed` to create the database schema and seed development content.
 
-## Production build
+## Routes and content
 
-```sh
-npm run build
-npm run preview
-```
+The public site includes Home, About, Services and service details, Insights and articles, Contact, Learn and Privacy. Case studies and Learn products are hidden until approved content is published. `/forum` and its subpaths redirect to `/contact`; legacy About, News and Contact URLs redirect to their replacements.
 
-Serve `dist/` behind the production HTTPS web server, fall back to `index.html` for SPA routes, and route `/api` and `/sanctum` to Laravel. Replace the starter company copy and publish approved services/content before launch.
+Site copy and service content live in `src/data/`. Keep unconfirmed details and account features unpublished. `ENABLE_ACCOUNTS` in `src/data/features.js` remains `false` until courses and payments are ready.
 
-## Photography and brand assets
+## Production
 
-The header logo and several photographs are bundled locally from the public CLM Consultants website. Other illustrative stock photographs are not portraits of CLM staff or images of CLM offices. They are served from `src/assets/`:
+Deploy `frontend/` to Vercel with `npm run build` and `dist` as the output directory. `vercel.json` contains the legacy redirects and SPA fallback. Set the Vercel build environment variable `VITE_API_ORIGIN` to the origin serving Laravel; leave it empty only when a separate same-origin proxy is configured. Configure Laravel's CORS and Sanctum stateful domains, session cookie domain and HTTPS settings for the deployed frontend. Do not change domain DNS or mail-exchange records as part of a frontend deployment.
 
-- [CLM Consultants logo](https://clmconsultants.co.tz/wp-content/uploads/2022/09/clm-consultants-logo-1.png)
-- [CLM Consultants website photography](https://clmconsultants.co.tz/)
-- [Team collaboration photo](https://images.unsplash.com/photo-1521737711867-e3b97375f902)
-- [Workshop photo](https://images.unsplash.com/photo-1556761175-b413da4baf72)
-- [Workspace photo](https://images.unsplash.com/photo-1524758631624-e2822e304c36)
+Run backend migrations before deploying the API, including the contact inquiry and Insights category migrations. Configure production SMTP in Laravel (`MAIL_MAILER`, `MAIL_HOST`, `MAIL_PORT`, `MAIL_USERNAME`, `MAIL_PASSWORD`, `MAIL_ENCRYPTION`, `MAIL_FROM_ADDRESS` and `MAIL_FROM_NAME`) so contact inquiries can be delivered to `info@clmconsultants.co.tz`. Local `MAIL_MAILER=log` records messages in the application log and does not send email.
 
-Replace illustrative stock photos with approved CLM photography as it becomes available. Confirm that use of third-party site assets and Unsplash imagery is permitted for the intended deployment.
+## Validation
+
+From `frontend/`, run `npm run build`. From `backend/`, run `php artisan test`.

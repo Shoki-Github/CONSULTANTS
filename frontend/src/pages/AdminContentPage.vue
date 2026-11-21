@@ -11,7 +11,7 @@ const success = ref('')
 const submitting = ref(false)
 const editing = reactive({ service: null, article: null, faq: null })
 const serviceForm = reactive({ name: '', slug: '', summary: '', description: '', is_active: false, sort_order: 0 })
-const articleForm = reactive({ title: '', slug: '', excerpt: '', body: '', status: 'draft', published_at: '' })
+const articleForm = reactive({ title: '', slug: '', excerpt: '', category: '', body: '', status: 'draft', published_at: '' })
 const faqForm = reactive({ question: '', answer: '', is_active: false, sort_order: 0 })
 
 async function loadContent() {
@@ -22,9 +22,9 @@ async function loadContent() {
       apiRequest('/admin/news'),
       apiRequest('/admin/faqs'),
     ])
-    services.value = serviceResponse.data.data
-    articles.value = newsResponse.data.data
-    faqs.value = faqResponse.data.data
+    services.value = serviceResponse.data.data.data
+    articles.value = newsResponse.data.data.data
+    faqs.value = faqResponse.data.data.data
   } catch (requestError) {
     error.value = requestError.message
   }
@@ -62,7 +62,7 @@ async function saveService() {
 
 function resetArticle() {
   editing.article = null
-  Object.assign(articleForm, { title: '', slug: '', excerpt: '', body: '', status: 'draft', published_at: '' })
+  Object.assign(articleForm, { title: '', slug: '', excerpt: '', category: '', body: '', status: 'draft', published_at: '' })
 }
 
 function editArticle(article) {
@@ -73,6 +73,7 @@ function editArticle(article) {
     title: article.title,
     slug: article.slug,
     excerpt: article.excerpt || '',
+    category: article.category || '',
     body: article.body,
     status: article.status,
     published_at: publishedAt ? publishedAt.toISOString().slice(0, 16) : '',
@@ -180,6 +181,16 @@ onMounted(loadContent)
           <label class="field-label">Title<input v-model="articleForm.title" class="field-input" required maxlength="255" /></label>
           <label class="field-label">URL slug<input v-model="articleForm.slug" class="field-input" required pattern="[A-Za-z0-9_-]+" maxlength="255" /></label>
           <label class="field-label">Excerpt<input v-model="articleForm.excerpt" class="field-input" maxlength="500" /></label>
+          <label class="field-label">Category
+            <select v-model="articleForm.category" class="field-input" :required="articleForm.status === 'published'">
+              <option value="">Select a category</option>
+              <option>MEL</option>
+              <option>Data &amp; AI</option>
+              <option>ESG</option>
+              <option>Dira 2050</option>
+              <option>Training</option>
+            </select>
+          </label>
           <label class="field-label">Article body<textarea v-model="articleForm.body" class="field-input min-h-40" required maxlength="100000"></textarea></label>
           <label class="field-label">Publication status
             <select v-model="articleForm.status" class="field-input"><option value="draft">Draft</option><option value="published">Published</option><option value="archived">Archived</option></select>
@@ -192,7 +203,7 @@ onMounted(loadContent)
         <div class="space-y-3">
           <h2 class="text-lg font-semibold text-ink">Articles ({{ articles.length }})</h2>
           <article v-for="article in articles" :key="article.id" class="flex items-start justify-between gap-4 rounded-xl border border-line p-4">
-            <div><h3 class="font-semibold text-ink">{{ article.title }}</h3><p class="mt-1 text-xs text-muted">{{ article.slug }} · {{ article.status }}</p></div>
+            <div><h3 class="font-semibold text-ink">{{ article.title }}</h3><p class="mt-1 text-xs text-muted">{{ article.slug }} · {{ article.category || 'Uncategorised' }} · {{ article.status }}</p></div>
             <button class="button-quiet text-sm font-bold text-brand hover:text-brand-dark" type="button" @click="editArticle(article)">Edit</button>
           </article>
           <p v-if="!articles.length" class="text-sm text-muted">No articles have been added.</p>
